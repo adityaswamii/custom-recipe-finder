@@ -6,14 +6,11 @@ from pprint import pprint
 
 
 inputFile = open('dictionary.txt')
+inputJSON = open('dictionary.json')
 testFile = open('example.txt')
 
-recipe = ast.literal_eval(inputFile.read())
-
-
-data = json.dumps(recipe)
-with open('dictionary.json', 'w') as dictionary:
-    dictionary.write(data)
+#  recipe = ast.literal_eval(inputFile.read())
+recipe = json.loads(inputJSON.read())
 
 # - - - - - - FUNCTIONS - - - - - -
 
@@ -33,8 +30,8 @@ def search_recipe():
 
 
 def main():
-    pprint(recipe[1])
     print(type(recipe))
+    pprint(recipe['1'])
 
 
 main()
