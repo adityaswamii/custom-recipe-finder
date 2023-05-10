@@ -19,14 +19,7 @@ recipe = json.loads(inputJSON.read())
 # - - - - - - FUNCTIONS - - - - - -
 
 
-def print_recipe(n: str):
-    print('\nHere\'s a recipe we found for', recipe[n]['name'])
-    print('Cooking Time: ', recipe[n]['time'], 'minutes')
-    print('Ingredient List: ', recipe[n]['ingredients'])
-    print('Cooking Instructions: \n', recipe[n]['instructions'])
-
-
-def print_recipe(n: int):
+def print_recipe(n):
     n = str(n)
     print('\nHere\'s a recipe we found for', recipe[n]['name'])
     print('Cooking Time: ', recipe[n]['time'], 'minutes')
@@ -51,7 +44,7 @@ def search_recipe():
 def main():
     print(type(recipe))
     pprint(recipe['1'])
-    print_recipe('3')
+    print_recipe(3)
 
 
 main()
