@@ -5,11 +5,16 @@ from pprint import pprint
 # - - - - - - INITIAL VALUES - - - - - -
 
 
-inputFile = open('dictionary.txt')
-inputJSON = open('dictionary.json')
-testFile = open('example.txt')
+#   #  INPUT THE DICTIONARY FROM dictionary.txt AS A STRING
+#   inputFile = open('dictionary.txt')
+#   #  USE ast.literal_eval() TO CONVERT THE STRING INPUT TO A DICTIONARY AND STORE THE DICTIONARY IN recipe
+#   recipe = ast.literal_eval(inputFile.read())
+#   #  WRITE THE DICTIONARY IN recipe TO A JSON FILE
+#   data = json.dumps(recipe)
+#   with open("dictionary.json", 'w') as d:
+#     d.write(data)
 
-#  recipe = ast.literal_eval(inputFile.read())
+inputJSON = open('dictionary.json')
 recipe = json.loads(inputJSON.read())
 
 # - - - - - - FUNCTIONS - - - - - -
@@ -31,7 +36,7 @@ def search_recipe():
 
 def main():
     print(type(recipe))
-    pprint(recipe['1'])
+    pprint(recipe['1']['time'])
 
 
 main()
