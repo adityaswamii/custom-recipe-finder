@@ -56,9 +56,11 @@ def search_recipe():  # inputs parameter and search value from user to check and
             print_recipe(n)
             c += 1
     if c == 0:
-        print('Sorry, we don\'t have any recipes that match your search criteria :(')
+        print('\nSorry, we don\'t have any recipes that match your search criteria :(')
         print('Add some recipes of your own by typing /add\n')
         return
+    else:
+        print('\n\nLooks good!\nWe found', c, 'recipe(s) that match your search criteria\n')
 
 
 def add_recipe():  # inputs all parameter values and adds recipe to dictionary
