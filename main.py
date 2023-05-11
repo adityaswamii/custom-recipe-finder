@@ -1,9 +1,7 @@
 import json
 import random
-from pprint import pprint
 
 # - - - - - - INITIAL VALUES - - - - - -
-
 
 #   #  INPUT THE DICTIONARY FROM dictionary.txt AS A STRING
 #   inputFile = open('dictionary.txt')
@@ -13,8 +11,9 @@ from pprint import pprint
 #   data = json.dumps(recipe)
 #   with open("dictionary.json", 'w') as d:
 #     d.write(data)
-inputJSON = open('dictionary.json')
-recipe = json.loads(inputJSON.read())
+
+inputJSON = open('dictionary.json')  # reads JSON data from source file
+recipe = json.loads(inputJSON.read())  # decodes JSON to dictionary
 
 # - - - - - - FUNCTIONS - - - - - -
 
@@ -42,7 +41,7 @@ def check_recipe(n, k, sv) -> bool:  # check if a search value exists in a given
         return False
 
 
-def search_recipe():
+def search_recipe():  # inputs parameter and search value from user to check and return valid recipes from dictionary
     search_parameters = ['name', 'time', 'ingredients', 'tags']
     print('Search for recipes based on the following parameters', search_parameters)
     k = input('Enter search parameter: ').lower()
@@ -62,7 +61,7 @@ def search_recipe():
         return
 
 
-def add_recipe():
+def add_recipe():  # inputs all parameter values and adds recipe to dictionary
     av_name = input('Enter recipe name. If you don\'t want to add a recipe right now, type /back\n')
     if av_name == '/back' or av_name == '':
         return
@@ -75,7 +74,7 @@ def add_recipe():
     av_tags = input('Enter a few tags separated by commas and a space. This will help identify your recipe when searching for it. (eg. noodles, Chinese, spicy) \n')
     av_tags = list(av_tags.split(', '))
     
-    av_instructions = input('Lastly, enter the cooking instructions. Feel free to be as detailed as you want \n')
+    av_instructions = input('Lastly, enter the cooking instructions. Feel free to be as detailed as you want! \n')
     
     av_dict = {
         'name': str(av_name),
@@ -88,18 +87,16 @@ def add_recipe():
     av = 1
     while str(av) in recipe:
         av += 1
-        
-    pprint(av_dict)
+    
     recipe.update({str(av): av_dict})
     print('\nYour recipe has been added to our collection. Try searching for it!')
     
 
-def delete_recipe():
+def delete_recipe():  # deletes a specified recipe from the dictionary
     dv = input('Enter the name of the recipe you would like to remove: ')
     for n in recipe.keys():
         if check_recipe(n, 'name', dv):
-            recipe.pop(n)
-            print('The recipe for', dv, 'was successfully deleted')
+            print('The recipe for', recipe.pop(n)['name'], 'was successfully deleted')
             return
     print('Could not find the recipe you were looking for')
     
@@ -108,15 +105,15 @@ def delete_recipe():
 
 
 def main():
-    print('\nWelcome to Custom Recipe Finder - a program that lets you find the perfect recipe for you at any time\n')
+    print('\nWelcome to RecipEasy - a program that lets you find the perfect recipe for you at any time\n')
     print('Enter a command to get started \nType /help to see the list of valid commands')
     while True:
         command = input('\n_')
         if command == '/exit':
-            data = json.dumps(recipe)
+            data = json.dumps(recipe)  # when exiting program, convert dictionary to JSON data
             with open("dictionary.json", 'w') as d:
-                d.write(data)
-            print('\nThank you for trying out Custom Recipe Finder!')
+                d.write(data)  # store data in a JSON file outside the program to ensure recipes are saved
+            print('\nThank you for trying out RecipEasy :)')
             return
         elif command == '/help':
             print('Here is the list of valid commands:')
