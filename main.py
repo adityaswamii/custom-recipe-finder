@@ -1,4 +1,5 @@
 import json
+import random
 
 # - - - - - - INITIAL VALUES - - - - - -
 
@@ -54,7 +55,8 @@ def search_recipe():
             print_recipe(n)
             c += 1
     if c == 0:
-        print('Sorry, we don\'t have any recipes that match your search criteria :(\nAdd some recipes of your own by typing /add\n')
+        print('Sorry, we don\'t have any recipes that match your search criteria :(')
+        print('Add some recipes of your own by typing /add\n')
         return
 
 
@@ -62,18 +64,45 @@ def add_recipe():
     pass
 
 
-def del_recipe():
+def delete_recipe():
     pass
 
 # - - - - - - MAIN EVENT LOOP - - - - - -
 
 
 def main():
-    print(type(recipe['3']['time']))
-    print_recipe(3)
-    print(list(recipe['3'].values()))
-    print(check_recipe(3, 'ingredient', 'Broccoli'))
-    search_recipe()
+    input_commands = ['/exit', '/search', '/add', '/delete', '/all', '/random', '/help']
+    print('\nWelcome to Custom Recipe Finder - a program that lets you find the perfect recipe for you at any time\n')
+    print('Enter a command to get started! \nType /help to see the list of valid commands')
+    command = ""
+    while True:
+        command = input('\n_')
+        if command == '/exit':
+            print('\nThank you for trying out Custom Recipe Finder!')
+            return
+        elif command == '/help':
+            print('Here is the list of valid commands:')
+            print('/exit --> Exits the program')
+            print('/search --> Search for a suitable recipe from our collection')
+            print('/add --> Add your own custom recipe to our collection')
+            print('/delete --> Remove a recipe from our collection')
+            print('/all --> Prints our entire collection of recipes')
+            print('/random --> Picks a random recipe to show you')
+            print('/help --> Shows list of valid commands\n')
+        elif command == '/search':
+            search_recipe()
+        elif command == '/add':
+            add_recipe()
+        elif command == '/delete':
+            delete_recipe()
+        elif command == '/all':
+            for n in recipe.keys():
+                print_recipe(n)
+        elif command == '/random':
+            r = random.choice(list(recipe.keys()))
+            print_recipe(r)
+        else:
+            print('Please enter a valid command')
 
 
 main()
