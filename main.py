@@ -1,5 +1,6 @@
 import json
 import random
+from pprint import pprint
 
 # - - - - - - INITIAL VALUES - - - - - -
 
@@ -21,6 +22,7 @@ recipe = json.loads(inputJSON.read())
 def print_recipe(n):  # print a specified recipe
     n = str(n)
     print('\nHere\'s a recipe we found for', recipe[n]['name'])
+    print('Tags:', recipe[n]['tags'])
     print('Cooking Time: ', recipe[n]['time'], 'minutes')
     print('Ingredient List: ', recipe[n]['ingredients'])
     print('Cooking Instructions: \n', recipe[n]['instructions'])
@@ -43,8 +45,8 @@ def check_recipe(n, k, sv) -> bool:  # check if a search value exists in a given
 def search_recipe():
     search_parameters = ['name', 'time', 'ingredients', 'tags']
     print('Search for recipes based on the following parameters', search_parameters)
-    k = input('Enter search parameter: ')
-    while k.lower() not in search_parameters:
+    k = input('Enter search parameter: ').lower()
+    while k not in search_parameters:
         print('Incorrect search parameter')
         k = input('Enter search parameter: ')
     sv = input('Enter search value: ')
@@ -61,23 +63,59 @@ def search_recipe():
 
 
 def add_recipe():
-    pass
-
+    av_name = input('Enter recipe name. If you don\'t want to add a recipe right now, type /back\n')
+    if av_name == '/back' or av_name == '':
+        return
+    
+    av_ingredients = input('Enter list of ingredients separated by commas and a space. Avoid mentioning quantities. (eg. milk, flour, eggs, sugar) \n')
+    av_ingredients = list(av_ingredients.split(', '))
+    
+    av_time = input('Enter total cooking time in minutes. (eg. if a dish takes 20 minutes to prepare, only type the number 20) \n')
+    
+    av_tags = input('Enter a few tags separated by commas and a space. This will help identify your recipe when searching for it. (eg. noodles, Chinese, spicy) \n')
+    av_tags = list(av_tags.split(', '))
+    
+    av_instructions = input('Lastly, enter the cooking instructions. Feel free to be as detailed as you want \n')
+    
+    av_dict = {
+        'name': str(av_name),
+        'ingredients': list(av_ingredients),
+        'time': int(av_time),
+        'tags': list(av_tags),
+        'instructions': str(av_instructions)
+    }
+    
+    av = 1
+    while str(av) in recipe:
+        av += 1
+        
+    pprint(av_dict)
+    recipe.update({str(av): av_dict})
+    print('\nYour recipe has been added to our collection. Try searching for it!')
+    
 
 def delete_recipe():
-    pass
+    dv = input('Enter the name of the recipe you would like to remove: ')
+    for n in recipe.keys():
+        if check_recipe(n, 'name', dv):
+            recipe.pop(n)
+            print('The recipe for', dv, 'was successfully deleted')
+            return
+    print('Could not find the recipe you were looking for')
+    
 
-# - - - - - - MAIN EVENT LOOP - - - - - -
+# - - - - - - MAIN PROGRAM LOOP - - - - - -
 
 
 def main():
-    input_commands = ['/exit', '/search', '/add', '/delete', '/all', '/random', '/help']
     print('\nWelcome to Custom Recipe Finder - a program that lets you find the perfect recipe for you at any time\n')
-    print('Enter a command to get started! \nType /help to see the list of valid commands')
-    command = ""
+    print('Enter a command to get started \nType /help to see the list of valid commands')
     while True:
         command = input('\n_')
         if command == '/exit':
+            data = json.dumps(recipe)
+            with open("dictionary.json", 'w') as d:
+                d.write(data)
             print('\nThank you for trying out Custom Recipe Finder!')
             return
         elif command == '/help':
