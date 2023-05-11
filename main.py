@@ -1,5 +1,4 @@
 import json
-from pprint import pprint
 
 # - - - - - - INITIAL VALUES - - - - - -
 
@@ -12,14 +11,13 @@ from pprint import pprint
 #   data = json.dumps(recipe)
 #   with open("dictionary.json", 'w') as d:
 #     d.write(data)
-
 inputJSON = open('dictionary.json')
 recipe = json.loads(inputJSON.read())
 
 # - - - - - - FUNCTIONS - - - - - -
 
 
-def print_recipe(n):
+def print_recipe(n):  # print a specified recipe
     n = str(n)
     print('\nHere\'s a recipe we found for', recipe[n]['name'])
     print('Cooking Time: ', recipe[n]['time'], 'minutes')
@@ -41,8 +39,12 @@ def check_recipe(n, k, sv) -> bool:  # check if a search value exists in a given
         return False
 
 
-def search_recipe(k, v):
-    pass
+def search_recipe():
+    k = input('Enter search parameter: ')
+    sv = input('Enter search value: ')
+    for n in recipe.keys():
+        if check_recipe(n, k, sv):
+            print_recipe(n)
 
 
 def add_recipe():
@@ -60,6 +62,7 @@ def main():
     print_recipe(3)
     print(list(recipe['3'].values()))
     print(check_recipe(3, 'ingredient', 'Broccoli'))
+    search_recipe()
 
 
 main()
