@@ -40,11 +40,22 @@ def check_recipe(n, k, sv) -> bool:  # check if a search value exists in a given
 
 
 def search_recipe():
+    search_parameters = ['name', 'time', 'ingredients', 'tags']
+    print('Search for recipes based on the following parameters', search_parameters)
     k = input('Enter search parameter: ')
+    while k.lower() not in search_parameters:
+        print('Incorrect search parameter')
+        k = input('Enter search parameter: ')
     sv = input('Enter search value: ')
+    
+    c = 0
     for n in recipe.keys():
         if check_recipe(n, k, sv):
             print_recipe(n)
+            c += 1
+    if c == 0:
+        print('Sorry, we don\'t have any recipes that match your search criteria :(\nAdd some recipes of your own by typing /add\n')
+        return
 
 
 def add_recipe():
