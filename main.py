@@ -27,6 +27,24 @@ def print_recipe(n):
     print('Cooking Instructions: \n', recipe[n]['instructions'])
 
 
+def check_recipe(n, k, sv) -> bool:  # check if a search value exists in a given parameter of a specified recipe
+    n = str(n)
+    if k == 'name':
+        return recipe[n][k].lower() == sv.lower()
+    elif k == 'ingredients' or k == 'tags':
+        return sv.lower() in (i.lower() for i in recipe[n][k])
+    elif k == 'time':
+        sv = int(sv)
+        return recipe[n][k] <= sv
+    else:
+        print('invalid check parameter in', n, k, sv)
+        return False
+
+
+def search_recipe(k, v):
+    pass
+
+
 def add_recipe():
     pass
 
@@ -34,17 +52,14 @@ def add_recipe():
 def del_recipe():
     pass
 
-
-def search_recipe():
-    pass
-
 # - - - - - - MAIN EVENT LOOP - - - - - -
 
 
 def main():
-    print(type(recipe))
-    pprint(recipe['1'])
+    print(type(recipe['3']['time']))
     print_recipe(3)
+    print(list(recipe['3'].values()))
+    print(check_recipe(3, 'ingredient', 'Broccoli'))
 
 
 main()
